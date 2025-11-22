@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro de Garantia - WiWU{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+    <h1 class="page-title">Cadastro de Garantia</h1>
+    
+    <!-- 
+      O formulário agora engloba todos os cards 
+      e o enctype é necessário para o upload de arquivos.
+    -->
+    <form action="." method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Card 1: Informações da Garantia -->
+        <div class="info-card">
+            <div class="section-header">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 16C13.1046 16 14 15.1046 14 14C14 12.8954 13.1046 12 12 12C10.8954 12 10 12.8954 10 14C10 15.1046 10.8954 16 12 16Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 12V10" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="section-title">Nova garantia</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="nome_cliente">Para quem será cadastrado?</label>
+                <input type="text" id="nome_cliente" name="nome_cliente" placeholder="Digite o nome completo">
+            </div>
+
+            <!-- NOVO CAMPO: CPF -->
+            <div class="form-group">
+                <label for="cpf_cliente">CPF (de quem usará a garantia)</label>
+                <input type="text" id="cpf_cliente" name="cpf_cliente" placeholder="Digite o CPF">
+            </div>
+            
+            <div class="form-group">
+                <label for="data_compra">Quando que o produto foi comprado?</label>
+                <input type="text" id="data_compra" name="data_compra" placeholder="dd/mm/aaaa">
+            </div>
+            
+            <!-- CAMPO MODIFICADO: Agora é um Select -->
+            <div class="form-group">
+                <label for="tipo_compra">O produto foi comprado em loja física ou online?</label>
+                <select id="tipo_compra" name="tipo_compra">
+                    <option value="" disabled selected>Selecione o local da compra</option>
+                    <option value="fisica">Loja Física</option>
+                    <option value="online">Loja Online</option>
+                </select>
+            </div>
+
+            <!-- NOVO CAMPO: CNPJ da Revenda -->
+            <div class="form-group">
+                <label for="cnpj_revenda">CNPJ da revenda</label>
+                <input type="text" id="cnpj_revenda" name="cnpj_revenda" placeholder="Digite o CNPJ da loja onde comprou">
+            </div>
+
+        </div>
+
+        <!-- Card 2: Informações do Produto -->
+        <div class="info-card">
+            <div class="section-header">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="section-title">Sobre o Produto</h2>
+            </div>
+
+            <!-- NOVO CAMPO: Tipo de Produto -->
+            <div class="form-group">
+                <label for="tipo_produto">Qual o tipo do produto?</label>
+                <select id="tipo_produto" name="tipo_produto">
+                    <option value="" disabled selected>Selecione o tipo</option>
+                    <option value="camera">Câmera</option>
+                    <option value="lente">Lente</option>
+                    <option value="pelicula">Películas (tela ou câmera)</option>
+                    <option value="celular">Celular</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+
+            <!-- CAMPO MODIFICADO: Era 'modelo_produto' -->
+            <div class="form-group">
+                <label for="modelo_produto">Qual o modelo do aparelho/produto?</label>
+                <input type="text" id="modelo_produto" name="modelo_produto" placeholder="Ex: iPhone 14, Película Pro, Lente 50mm">
+            </div>
+
+            <!-- NOVO CAMPO: Serial -->
+            <div class="form-group">
+                <label for="serial_produto">Qual o código serial do produto?</label>
+                <input type="text" id="serial_produto" name="serial_produto" placeholder="Digite o código serial (se houver)">
+            </div>
+
+            <!-- NOVO CAMPO: CPF do Vendedor -->
+            <div class="form-group">
+                <label for="cpf_vendedor">CPF do vendedor (não obrigatório)</label>
+                <input type="text" id="cpf_vendedor" name="cpf_vendedor" placeholder="Digite o CPF do vendedor (opcional)">
+            </div>
+        </div>
+
+        <!-- Card 3: Fotos do Produto (NOVO) -->
+        <div class="info-card">
+            <h3 class="upload-title">Anexe as fotos do produto</h3>
+            
+            <div class="upload-area">
+                <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 8L12 3L7 8" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V15" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="upload-text-bold">Importar imagens</p>
+                <!-- Texto de ajuda que o JavaScript vai alterar -->
+                <p class="upload-text" id="upload-helper-text">Arraste e solte para importar as imagens. (Obrigatório 2 fotos)</p>
+                
+                <!-- 
+                  O <label> aciona o <input> escondido.
+                  Adicionado 'multiple' para permitir vários arquivos.
+                -->
+                <label for="fotos_produto" class="upload-btn">Carregar imagens</label>
+                <input type="file" id="fotos_produto" name="fotos_produto" multiple style="display: none;">
+            </div>
+        </div>
+
+        <!-- Card 4: Cupom Fiscal (Era o Card 2) -->
+        <div class="info-card">
+            <h3 class="upload-title">Anexe uma foto do cupom fiscal</h3>
+            
+            <div class="upload-area">
+                <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 8L12 3L7 8" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V15" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="upload-text-bold">Importar uma imagem</p>
+                <p class="upload-text">Arraste e solte para importar a foto do cupom.</p>
+                
+                <!-- Corrigido de <button> para <label> para funcionar -->
+                <label for="foto_cupom" class="upload-btn">Carregar uma imagem</label>
+                <input type="file" id="foto_cupom" name="foto_cupom" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Botão de Submit (NOVO) -->
+        <div style="text-align: right; margin-top: 30px; margin-bottom: 20px;">
+            <button type="submit" class="btn btn-login" style="min-width: 220px;">
+                Cadastrar Garantia
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<!-- SCRIPT para upload condicional -->
+<script>
+    // Espera o DOM carregar para adicionar o listener
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // Encontra o select "Tipo de Produto"
+        const tipoProdutoSelect = document.getElementById('tipo_produto');
+        
+        // Encontra o texto de ajuda do upload de fotos
+        const uploadHelperText = document.getElementById('upload-helper-text');
+        
+        // Adiciona um listener para o evento 'change'
+        tipoProdutoSelect.addEventListener('change', function() {
+            
+            // Verifica o valor selecionado
+            if (this.value === 'pelicula') {
+                // Se for película, muda o texto de ajuda
+                uploadHelperText.innerHTML = 'Arraste e solte para importar as imagens. (Obrigatório 6 fotos)';
+            } else {
+                // Para todos os outros, usa o texto padrão
+                uploadHelperText.innerHTML = 'Arraste e solte para importar as imagens. (Obrigatório 2 fotos)';
+            }
+        });
+    });
+</script>
+{% endblock %}

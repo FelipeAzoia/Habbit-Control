@@ -1,0 +1,239 @@
+{% extends 'login_cadastro_app/base_auth.html' %} 
+{% load static %}
+
+{% block auth_title %}Cadastro de Cliente{% endblock %}
+
+{# Renderização Explícita: Garante que cada campo seja chamado uma única vez #}
+{% block content %} 
+    
+    <div class="form-header">
+        <h1 class="form-title">Cadastro de Cliente</h1>
+        <p class="form-subtitle">Preencha seus dados para criar sua conta.</p>
+    </div>
+
+    {# Exibição de Mensagens do Django (Success, Error, Info) #}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" class="registration-form">
+        {% csrf_token %}
+        
+        <!-- DADOS PESSOAIS E ACESSO -->
+        <div class="form-section">
+            <div class="section-header">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26 15 3.41 18.13 3.41 22" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="section-title">Dados Pessoais e Acesso</h2>
+            </div>
+            
+            {# RENDERIZAÇÃO EXPLÍCITA: Nome Completo #}
+            <div class="form-group">
+                <label for="{{ form.nome_completo.id_for_label }}">{{ form.nome_completo.label }}</label>
+                {{ form.nome_completo }}
+                {% if form.nome_completo.errors %}<ul class="errorlist">{% for error in form.nome_completo.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            {# RENDERIZAÇÃO EXPLÍCITA: Idade (Aparece apenas aqui!) #}
+            <div class="form-group">
+                <label for="{{ form.idade.id_for_label }}">{{ form.idade.label }}</label>
+                {{ form.idade }}
+                {% if form.idade.errors %}<ul class="errorlist">{% for error in form.idade.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            {# RENDERIZAÇÃO EXPLÍCITA: CPF #}
+            <div class="form-group">
+                <label for="{{ form.cpf.id_for_label }}">{{ form.cpf.label }}</label>
+                {{ form.cpf }}
+                {% if form.cpf.errors %}<ul class="errorlist">{% for error in form.cpf.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            {# RENDERIZAÇÃO EXPLÍCITA: Email #}
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.errors %}<ul class="errorlist">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+            
+            {# RENDERIZAÇÃO EXPLÍCITA: Senha COM TOGGLE #}
+            <div class="form-group password-toggle-group">
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                <div class="input-with-icon">
+                    {{ form.password }}
+                    {# Ícone SVG para alternar a visibilidade da senha #}
+                    <svg id="togglePassword" class="password-toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 12S5 4 12 4C19 4 23 12 23 12" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+                        <path d="M12 12.5C13.3807 12.5 14.5 11.3807 14.5 10C14.5 8.61929 13.3807 7.5 12 7.5C10.6193 7.5 9.5 8.61929 9.5 10C9.5 11.3807 10.6193 12.5 12 12.5Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path id="eye-slash" d="M17.5 6.5L6.5 17.5" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                {% if form.password.errors %}<ul class="errorlist">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+        </div>
+
+        <!-- LOCALIZAÇÃO -->
+        <div class="form-section">
+            <div class="section-header">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="section-title">Localização</h2>
+            </div>
+            
+            {# RENDERIZAÇÃO EXPLÍCITA: Cidade #}
+            <div class="form-group">
+                <label for="{{ form.cidade.id_for_label }}">{{ form.cidade.label }}</label>
+                {{ form.cidade }}
+                {% if form.cidade.errors %}<ul class="errorlist">{% for error in form.cidade.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            {# RENDERIZAÇÃO EXPLÍCITA: País #}
+            <div class="form-group">
+                <label for="{{ form.pais.id_for_label }}">{{ form.pais.label }}</label>
+                {{ form.pais }}
+                {% if form.pais.errors %}<ul class="errorlist">{% for error in form.pais.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+        </div>
+
+        <!-- PROFISSÃO -->
+        <div class="form-section">
+            <div class="section-header">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 7H4C2.9 7 2 7.9 2 9V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V9C22 7.9 21.1 7 20 7Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 7V5C16 3.9 15.1 3 14 3H10C8.9 3 8 3.9 8 5V7" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="section-title">Profissão</h2>
+            </div>
+            
+            {# RENDERIZAÇÃO EXPLÍCITA: Profissão #}
+            <div class="form-group">
+                <label for="{{ form.profissao.id_for_label }}">Qual é sua profissão?</label>
+                {{ form.profissao }}
+                {% if form.profissao.errors %}<ul class="errorlist">{% for error in form.profissao.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+        </div>
+
+        <!-- CONSENTIMENTOS (LGPD) -->
+        <div class="form-section">
+            <div class="section-header">
+                <svg class="section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12L11 14L15 10" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="section-title">Consentimentos</h2>
+            </div>
+            
+            {# RENDERIZAÇÃO EXPLÍCITA: LGPD #}
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    {{ form.lgpd }}
+                    <span class="checkbox-text">
+                        <strong><a href="{% url 'consentimento' %}">Aceito os termos da Lei Geral de Proteção de Dados (LGPD) *</a></strong>
+                        <span class="checkbox-description">Concordo com o tratamento dos meus dados pessoais conforme a LGPD.</span>
+                    </span>
+                    {% if form.lgpd.errors %}
+                        <ul class="errorlist">{% for error in form.lgpd.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                    {% endif %}
+                </label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-submit">Realizar Cadastro</button>
+        
+        {# Erros que não são de campo (non-field errors) #}
+        {% if form.non_field_errors %}
+            <ul class="errorlist">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+    </form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'login_cadastro_app/js/masks.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const profissaoInput = document.getElementById('id_profissao');
+        const passwordInput = document.getElementById('id_password');
+        const togglePassword = document.getElementById('togglePassword');
+        const cpfInput = document.getElementById('id_cpf');
+        
+        // 1. Lógica para alternar visibilidade da senha
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function (e) {
+                // Alterna o tipo entre 'password' e 'text'
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Alterna a classe (para mudar o visual do ícone se você tiver CSS)
+                this.classList.toggle('visible');
+
+                // Oculta/Exibe a linha diagonal do olho
+                const eyeSlash = document.getElementById('eye-slash');
+                if (eyeSlash) {
+                    eyeSlash.style.display = type === 'text' ? 'none' : 'block';
+                }
+            });
+        }
+
+        // 2. Lógica de Máscara de CPF
+        // O forms.py injetou data-mask="000.000.000-00" no input.
+        if (cpfInput) {
+            // Assume que você está usando as funções do seu masks.js (maskCPF, maskDate, maskPhone)
+            // Vamos adicionar o listener ao campo CPF usando a função maskCPF que você já tem.
+            
+            // Verifica se a função maskCPF existe (importada do masks.js)
+            if (typeof maskCPF === 'function') {
+                 // Inicializa a máscara com o valor atual (se houver)
+                 maskCPF(cpfInput); 
+                 
+                 // Adiciona o listener para formatar a cada digitação
+                 cpfInput.addEventListener('input', function() {
+                     maskCPF(this);
+                 });
+                 
+                 // Adiciona listener para limpar a máscara ao sair (opcional, mas bom para UX)
+                 cpfInput.addEventListener('blur', function() {
+                      // Você pode adicionar lógica aqui para garantir que o campo esteja completo se necessário
+                 });
+            } else {
+                 console.warn("Função maskCPF não encontrada. Verifique o arquivo masks.js.");
+            }
+        } 
+
+        // 3. Mantém a profissão habilitada
+        if (profissaoInput) {
+            profissaoInput.disabled = false;
+        }
+    });
+</script>
+<style>
+    /* Estilos CSS para o campo de senha com ícone */
+    .password-toggle-group {
+        position: relative;
+    }
+    .input-with-icon {
+        position: relative;
+    }
+    .input-with-icon input {
+        /* Garante que o input tenha espaço para o ícone */
+        padding-right: 40px !important; 
+    }
+    .password-toggle-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        fill: none; /* Garante que o SVG não tenha preenchimento interno */
+    }
+</style>
+{% endblock %}
