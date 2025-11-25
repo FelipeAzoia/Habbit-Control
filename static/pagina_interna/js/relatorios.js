@@ -55,6 +55,7 @@ function gerarRelatorio() {
     
     fetch(`${apiUrl}?habito_id=${habitoId}&periodo=${periodo}`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'X-CSRFToken': csrfToken || ''
         }
