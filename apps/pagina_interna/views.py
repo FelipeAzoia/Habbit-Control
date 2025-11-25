@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 import json
-from apps.login_cadastro_app.models import Cliente # Removido Revendedor
+from apps.login_cadastro_app.models import Cliente 
 
 # Create your views here.
 
@@ -26,7 +26,6 @@ def get_cliente_from_session(request):
 	return cliente, cliente_email
 
 def alterar_dados(request):
-	"""Render the dashboard 'Alterar Dados' page with client data."""
 	try:
 		# Busca o cliente pelo email armazenado na sessão
 		cliente, _ = get_cliente_from_session(request)
@@ -45,7 +44,6 @@ def alterar_dados(request):
 
 
 def cadastro_garantia(request):
-	"""Render the 'Cadastro de Garantia' page."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -53,13 +51,11 @@ def cadastro_garantia(request):
 		messages.warning(request, 'Por favor, faça login para acessar esta página.')
 		return redirect('login')
 	
-	# Template removido - funcionalidade não disponível
 	messages.info(request, 'A funcionalidade de cadastro de garantia não está disponível no momento.')
 	return redirect('alterar_dados')
 
 
 def consultar_garantia(request):
-	"""Render the 'Consultar Garantia' page."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -67,12 +63,10 @@ def consultar_garantia(request):
 		messages.warning(request, 'Por favor, faça login para acessar esta página.')
 		return redirect('login')
 	
-	# Template removido - funcionalidade não disponível
 	messages.info(request, 'A funcionalidade de consulta de garantia não está disponível no momento.')
 	return redirect('alterar_dados')
 
 def cadastro_habito(request):
-	"""Render the 'Cadastro de Hábito' page and handle form submission."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -134,7 +128,6 @@ def cadastro_habito(request):
 	return render(request, 'pagina_interna/cadastro_habito.html', {'cliente': cliente})
 
 def progressos(request):
-	"""Render the 'Progressos' page."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -162,7 +155,6 @@ def progressos(request):
 	return render(request, 'pagina_interna/progressos.html', context)
 
 def atividade_diaria(request):
-	"""Render the 'Atividade Diária' page."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -210,7 +202,6 @@ def atividade_diaria(request):
 	return render(request, 'pagina_interna/atividade_diaria.html', context)
 
 def relatorios(request):
-	"""Render the 'Relatórios' page."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -229,7 +220,7 @@ def relatorios(request):
 	return render(request, 'pagina_interna/relatorios.html', context)
 
 def api_dados_relatorio(request):
-	"""API endpoint para buscar dados do gráfico de relatórios."""
+	#API endpoint para buscar dados do gráfico de relatórios
 	from django.http import JsonResponse
 	from apps.pagina_interna.models import Habito, RegistroAtividade
 	from datetime import date, timedelta
@@ -388,7 +379,6 @@ def api_dados_relatorio(request):
 	return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
 
 def editar_habito(request, habito_id):
-	"""Render the 'Editar Hábito' page and handle form submission."""
 	# Verifica se o usuário está autenticado
 	cliente, _ = get_cliente_from_session(request)
 	
@@ -466,7 +456,6 @@ def editar_habito(request, habito_id):
 	return render(request, 'pagina_interna/editar_habito.html', {'cliente': cliente, 'habito': habito})
 
 def registrar_atividade(request):
-	"""API endpoint para registrar atividade de um hábito."""
 	from django.http import JsonResponse
 	from apps.pagina_interna.models import Habito, RegistroAtividade
 	from datetime import date
@@ -525,42 +514,12 @@ def registrar_atividade(request):
 	
 	return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
 
-
-# As views administrativas a seguir foram removidas ou simplificadas,
-# pois dependiam de modelos ou templates inexistentes.
-
-# Removidas as views 'validar_garantias_adm', 'cadastrar_produtos_adm', 'clientes_adm', 
-# 'consultar_garantias_adm', 'relatorios_adm', e 'revenda_adm', pois elas se
-# referem a funcionalidades administrativas que você indicou ter removido.
-
-
-# NOTA: Manter apenas a view 'revenda_adm' (renomeada abaixo para simplicidade)
-# causará erro se o template 'pagina_interna/revenda_adm.html' não existir.
-# Para manter a compatibilidade e não quebrar outras URLs que possam referenciar
-# essas views, vou apenas COMENTAR as que dependem de Revendedor/Admin:
-
-# def validar_garantias_adm(request):
-# 	return render(request, 'pagina_interna/validar_garantia_adm.html')
-
-# def cadastrar_produtos_adm(request):
-# 	return render(request, 'pagina_interna/cadastrar_produtos_adm.html')
-
-# ... (outras views admin removidas/comentadas) ...
-
-# A view 'revenda_adm' e todas as outras views _adm foram removidas
-# pois dependem do modelo Revendedor e dos templates admin que você apagou.
-# Se você precisar da lógica de revendedor novamente, deve recriar o modelo Revendedor.
-
 def revenda_adm(request):
-	# Esta view foi modificada para retornar um 404 ou uma página vazia,
-	# já que depende do modelo Revendedor e templates _adm que foram removidos.
-	# Retornando uma página simples para evitar o crash de importação.
 	return render(request, 'pagina_interna/home.html') 
 
 
 @require_POST
 def update_cliente(request):
-    """Handle AJAX requests to update client data."""
     try:
         data = json.loads(request.body)
         field = data.get('field')
@@ -576,9 +535,7 @@ def update_cliente(request):
         if not cliente:
             return JsonResponse({'success': False, 'error': 'Usuário não autenticado. Faça login novamente.'}, status=401)
         
-        # 2. LISTA DE CAMPOS PERMITIDOS (Atualizada para os novos campos)
-        # Chave = O que vem do JavaScript (edit_profile.js)
-        # Valor = Nome da coluna no seu models.py
+        # 2. LISTA DE CAMPOS PERMITIDOS 
         field_map = {
             'nome_completo': 'nome_completo',
             'idade': 'idade',
@@ -601,11 +558,9 @@ def update_cliente(request):
         if model_field == 'password':
             if not value:
                 return JsonResponse({'success': False, 'error': 'A senha não pode ser vazia'}, status=400)
-            # Nota: Como seu model tem um override no método save(), 
-            # basta atribuir o valor 'cru' aqui que o save() fará o hash.
             cliente.password = value
         else:
-            # Atribuição genérica para os outros campos
+
             setattr(cliente, model_field, value)
 
         # 4. Salvar

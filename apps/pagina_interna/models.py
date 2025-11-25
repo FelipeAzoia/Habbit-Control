@@ -76,8 +76,7 @@ class Habito(models.Model):
         ordering = ['-data_criacao']
 
 
-class RegistroAtividade(models.Model):
-    """Modelo para registrar atividades diárias dos hábitos"""
+class RegistroAtividade(models.Model):  
     habito = models.ForeignKey(
         Habito,
         on_delete=models.CASCADE,

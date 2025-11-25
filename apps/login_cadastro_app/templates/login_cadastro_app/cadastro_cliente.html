@@ -170,39 +170,49 @@
             </div>
             
             <div class="form-grid">
-                {# Cidade #}
-                <div class="form-group">
-                    <label for="{{ form.cidade.id_for_label }}">{{ form.cidade.label }}</label>
+                {# Estado #}
+                <div class="form-group estado-select-group">
+                    <label for="id_estado">Estado</label>
                     <div class="input-wrapper">
                         <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        {{ form.cidade }}
+                        <select id="id_estado" name="estado" class="form-select">
+                            <option value="" disabled selected>Selecione o estado</option>
+                        </select>
+                        <svg class="select-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    {% if form.cidade.errors %}
+                    {% if form.estado.errors %}
                         <ul class="errorlist">
-                            {% for error in form.cidade.errors %}
+                            {% for error in form.estado.errors %}
                                 <li>{{ error }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
                 </div>
 
-                {# País #}
-                <div class="form-group">
-                    <label for="{{ form.pais.id_for_label }}">{{ form.pais.label }}</label>
+                {# Cidade #}
+                <div class="form-group cidade-select-group">
+                    <label for="id_cidade">Cidade</label>
                     <div class="input-wrapper">
                         <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        {{ form.pais }}
+                        <select id="id_cidade" name="cidade" class="form-select" disabled>
+                            <option value="" disabled selected>Selecione primeiro o estado</option>
+                        </select>
+                        <svg class="select-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    {% if form.pais.errors %}
+                    {% if form.cidade.errors %}
                         <ul class="errorlist">
-                            {% for error in form.pais.errors %}
+                            {% for error in form.cidade.errors %}
                                 <li>{{ error }}</li>
                             {% endfor %}
                         </ul>
@@ -300,22 +310,6 @@
 
 {% block extra_js %}
 <script src="{% static 'login_cadastro_app/js/masks.js' %}"></script>
-<script>
-    // Auto-dismiss das notificações de erro com fade out
-    document.addEventListener('DOMContentLoaded', function() {
-        const errorMessages = document.querySelectorAll('.message-toast-top.message-toast-error');
-        
-        errorMessages.forEach(function(message, index) {
-            // Delay para iniciar o fade out (5 segundos)
-            setTimeout(function() {
-                message.classList.add('fade-out');
-                
-                // Remove o elemento após a animação de fade out
-                setTimeout(function() {
-                    message.remove();
-                }, 500); // Tempo da animação de fade out
-            }, 5000 + (index * 200)); // 5 segundos + delay entre múltiplas mensagens
-        });
-    });
-</script>
+<script src="{% static 'login_cadastro_app/js/estados_cidades.js' %}"></script>
+<script src="{% static 'login_cadastro_app/js/notifications.js' %}"></script>
 {% endblock %}

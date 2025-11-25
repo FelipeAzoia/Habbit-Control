@@ -92,11 +92,11 @@ def login(request):
                 storage = messages.get_messages(request)
                 storage.used = True
                 
-                # Autenticação bem-sucedida (Usando Sessão simples para simular login)
+                # Autenticação bem-sucedida 
                 request.session['cliente_email'] = cliente.email
                 messages.success(request, f'Bem-vindo(a), {cliente.nome_completo.split()[0]}!')
                 
-                # Redireciona para a página interna (alterar_dados, por exemplo)
+                # Redireciona para a página interna 
                 return redirect('alterar_dados')
             else:
                 # Limpa mensagens antigas antes de renderizar
@@ -118,7 +118,7 @@ def login(request):
         form = LoginForm()
         return render(request, 'login_cadastro_app/login.html', {'form': form})
 
-# Lógica de Logout (Ajustada para usar a session simples)
+# Lógica de Logout 
 def logout_view(request):
     if 'cliente_email' in request.session:
         del request.session['cliente_email']
