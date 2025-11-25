@@ -6,6 +6,7 @@
     <title>{% block title %}WiWU Dashboard{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'login_cadastro_app/css/style.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <div class="dashboard-layout">
@@ -88,6 +89,7 @@
             {% block content %}{% endblock %}
         </main>
     </div>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
 

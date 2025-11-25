@@ -11,15 +11,12 @@ def validar_cpf(cpf):
     # Remove caracteres não numéricos
     cpf = re.sub(r'[^0-9]', '', cpf)
     
-    # Verifica se tem 11 dígitos
     if len(cpf) != 11:
         return False
     
-    # Verifica se todos os dígitos são iguais (CPFs inválidos como 111.111.111-11)
     if cpf == cpf[0] * 11:
         return False
     
-    # Calcula o primeiro dígito verificador
     soma = 0
     for i in range(9):
         soma += int(cpf[i]) * (10 - i)
@@ -29,7 +26,6 @@ def validar_cpf(cpf):
     if int(cpf[9]) != digito1:
         return False
     
-    # Calcula o segundo dígito verificador
     soma = 0
     for i in range(10):
         soma += int(cpf[i]) * (11 - i)
@@ -52,7 +48,7 @@ class ClienteForm(forms.ModelForm):
     
     class Meta:
         model = Cliente
-        fields = ['nome_completo', 'idade', 'cpf', 'email', 'password', 'cidade', 'pais', 'profissao', 'lgpd']
+        fields = ['nome_completo', 'idade', 'cpf', 'email', 'password', 'estado', 'cidade', 'profissao', 'lgpd']
         
         widgets = {
             'nome_completo': forms.TextInput(attrs={'placeholder': 'Seu nome completo'}),
@@ -74,11 +70,10 @@ class ClienteForm(forms.ModelForm):
             return cpf_limpo
         return cpf
 
-    # O método save() do modelo Cliente já faz o hasheamento, então aqui apenas garante que o valor seja passado
     def clean_password(self):
         return self.cleaned_data.get('password')
     
-    # Sobrescreve o save para garantir que a senha seja tratada (embora o modelo Cliente já faça isso)
+    # Sobrescreve o save para garantir que a senha seja tratada
     def save(self, commit=True):
         cliente = super().save(commit=False)
         if commit:

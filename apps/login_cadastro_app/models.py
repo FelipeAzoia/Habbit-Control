@@ -13,8 +13,8 @@ class Cliente(models.Model):
     password = models.CharField(max_length=128, verbose_name="Senha") # Máx length para hash SHA256
     
     # --- Localização ---
-    cidade = models.CharField(max_length=100, verbose_name="Cidade", default='Indefinida') 
-    pais = models.CharField(max_length=100, verbose_name="País", default='Brasil') 
+    estado = models.CharField(max_length=2, verbose_name="Estado", blank=True, null=True)
+    cidade = models.CharField(max_length=100, verbose_name="Cidade", blank=True, null=True) 
     
     # --- Profissão ---
     profissao = models.CharField(max_length=100, blank=True, null=True, verbose_name="Profissão")

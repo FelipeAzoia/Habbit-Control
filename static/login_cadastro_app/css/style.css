@@ -1412,7 +1412,7 @@ body {
 }
 
 .registration-form .form-group input,
-.registration-form .form-group select {
+.registration-form .form-group select:not(.form-select) {
     padding-left: 48px !important;
     transition: all 0.3s ease;
 }
@@ -1875,6 +1875,97 @@ body {
         padding: 14px;
         font-size: 1rem;
     }
+}
+
+/* ============================================
+   ESTADO E CIDADE SELECT STYLES
+   ============================================ */
+
+.estado-select-group,
+.cidade-select-group {
+    position: relative;
+}
+
+.estado-select-group .input-wrapper,
+.cidade-select-group .input-wrapper {
+    position: relative;
+}
+
+.form-select {
+    width: 100%;
+    padding: 14px 50px 14px 45px;
+    border: 2px solid #E0E0E0;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #4A4A4A;
+    background-color: #F8F9FA;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: none !important;
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+/* Remove seta padrão no IE/Edge */
+.form-select::-ms-expand {
+    display: none !important;
+}
+
+/* Remove seta padrão no Firefox */
+.form-select {
+    text-indent: 0.01px;
+    text-overflow: '';
+}
+
+/* Garantir que não há seta padrão em nenhum navegador */
+.estado-select-group select,
+.cidade-select-group select,
+.estado-select-group .form-select,
+.cidade-select-group .form-select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: none !important;
+    background: #F8F9FA !important;
+    padding-left: 45px !important;
+    padding-right: 50px !important;
+}
+
+.estado-select-group select::-ms-expand,
+.cidade-select-group select::-ms-expand {
+    display: none !important;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #004B5E;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(0, 75, 94, 0.1);
+}
+
+.form-select:disabled {
+    background-color: #E8E8E8;
+    cursor: not-allowed;
+    color: #999;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #A0A0A0;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.form-select:focus + .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+    color: #004B5E;
 }
 
 
