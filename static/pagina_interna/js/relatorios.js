@@ -64,7 +64,7 @@ function gerarRelatorio() {
     .then(data => {
         if (data.success) {
             atualizarEstatisticas(data);
-            atualizarGrafico(data);
+            criarGrafico(data)
             mostrarElementos();
         } else {
             alert('Erro ao gerar relatório: ' + (data.error || 'Erro desconhecido'));
